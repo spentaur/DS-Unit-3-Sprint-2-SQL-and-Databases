@@ -18,6 +18,9 @@ class RPG:
         q = f"SELECT COUNT(*) FROM {table_name}"
         return self.__fetchone(q)[0]
 
+    def close(self):
+        self.__conn.close()
+
     def get_table_names(self):
         q = "SELECT name FROM sqlite_master WHERE type='table';"
         return sorted(self.__fetchall(q)[0])
@@ -144,3 +147,5 @@ if __name__ == '__main__':
     print(
         rpg.get_avg_weapons(characters_table, weapons_table, inventory_table))
     # 0.6721854304635762
+
+    rpg.close()
