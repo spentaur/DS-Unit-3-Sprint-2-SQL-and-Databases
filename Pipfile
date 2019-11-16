@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 numpy = "*"
 pandas = "*"
+sqlalchemy = "*"
+dotenv = "*"
 
 [requires]
 python_version = "3.7"
