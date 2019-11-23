@@ -130,10 +130,29 @@ interview screening questions (a form you fill when applying for a job):
 
 - In the Northwind database, what is the type of relationship between the
   `Employee` and `Territory` tables?
-   - 
+   - The tables have a "one to many" relationship. That means that each
+    employee can have many territories, but each territory may only have one
+     employee. These tables are also not directly related. The relationship
+      is actually stored in an intermediary table, `EmployeeTerritory`.
 - What is a situation where a document store (like MongoDB) is appropriate, and
   what is a situation where it is not appropriate?
+   - Document store databases, also sometimes known as document oriented
+    databases, are semi structured databases. That is to say that all rows
+    don't have to have the exact same data. This can be useful in
+    situations where you would have a lot of `NULL` columns in a more
+    traditional structured database. For instance storing logs where you
+    maybe have a lot of unpredictability in the data. That's also
+    good example of another one of document oriented databases. They
+    are great for when you have a lot of data, and a lot of write data.
+   - These types of databases typically do not offer the best ACID
+    properties. This means that there is a chance the data isn't 100
+    % predictable and guaranteed. This could be a problem if you were a
+     financial institute and needed to be positive about the amount of money
+      a person had in their account for instance. 
 - What is "NewSQL", and what is it trying to achieve?
+ - NewSQL isa new type of database system that aims to compromise between
+  traditional SQL databases and NoSQL databases. It attempts to offer ACID
+   guarantees, while also being very scalable.  
 
 ### Part 5 - Turn it in!
 Provide all the files you wrote (`demo_data.py`, `northwind.py`), as well as
