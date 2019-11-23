@@ -12,12 +12,14 @@ def main():
                                       "LIMIT 10"
 
         c.execute(ten_most_expensive_products)
+        print("Ten Most Expensive Products")
         pprint(c.fetchall())
         print("\n")
 
         average_employee_age_at_hire_time = "SELECT AVG(HireDate - " \
                                             "BirthDate) FROM Employee"
         c.execute(average_employee_age_at_hire_time)
+        print("Average Employee Age at Hire Time")
         print(c.fetchone()[0])
         print("\n")
 
@@ -32,6 +34,7 @@ def main():
                                                      "DESC LIMIT 10"
 
         c.execute(ten_most_expensive_products_with_suppliers)
+        print("Ten Most Expensive Products with Suppliers")
         pprint(c.fetchall())
         print("\n")
 
@@ -46,6 +49,7 @@ def main():
                            "DESC " \
                            "LIMIT 10"
         c.execute(largest_category)
+        print("Largest Category by Number of Unique Products")
         pprint(c.fetchall())
 
 
