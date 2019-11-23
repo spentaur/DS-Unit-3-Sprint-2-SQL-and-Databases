@@ -11,8 +11,16 @@ class RPG:
     def __fetchone(self, q):
         return self.__c.execute(q).fetchone()
 
-    def __fetchall(self, q):
-        return self.__c.execute(q).fetchall()
+    def __fetchall(self, q, return_column_names=False):
+        self.__c.execute(q)
+        if return_column_names:
+            return list(
+                map(lambda x: x[0], self.__c.description)), self.__c.fetchall()
+        else:
+            return self.__c.fetchall()
+
+    def fetchall(self, q, return_column_names=False):
+        return self.__fetchall(q, return_column_names)
 
     def __count(self, table_name):
         q = f"SELECT COUNT(*) FROM {table_name}"
@@ -87,6 +95,36 @@ class RPG:
                     GROUP BY character_id) X
                 ON C.character_id = X.character_id"""
         return self.__fetchall(q)[0][0]
+
+    def get_all_relationships(self, subclass_tables, characters_table,
+                              inventory_table, items_table):
+        characters = {}
+        for table in subclass_tables:
+            q = f"SELECT subclass.*, character.name AS character_name, " \
+                f"character.level, character.exp, character.hp, " \
+                f"character.strength, character.intelligence, " \
+                f"character.dexterity, character.wisdom, item.name AS " \
+                f"item_name, item.value AS item_value, item.weight AS " \
+                f"item_weight " \
+                f"FROM {table} subclass " \
+                f"JOIN {characters_table} character " \
+                f"ON subclass.character_ptr_id = character.character_id " \
+                f"JOIN {inventory_table} inventory " \
+                f"ON inventory.character_id = character.character_id " \
+                f"JOIN {items_table} item " \
+                f"ON item.item_id = inventory.item_id"
+
+            columns, rows = self.__fetchall(q, return_column_names=True)
+
+            if table in characters:
+                characters[table]['rows'].append(rows)
+            else:
+                characters[table] = {}
+                characters[table]['columns'] = [description[0] for description
+                                                in columns]
+                characters[table]['rows'] = rows
+
+        return characters
 
 
 if __name__ == '__main__':

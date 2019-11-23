@@ -3,6 +3,7 @@
     <words>
       <w>dotenv</w>
       <w>dtype</w>
+      <w>mongo</w>
       <w>postgre</w>
       <w>sqlalchemy</w>
     </words>
